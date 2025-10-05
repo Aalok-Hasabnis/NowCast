@@ -6,6 +6,8 @@ import { useGeolocation } from "@/hooks/use-geolocation"
 import { useForecastQuery, useReverseGeocodeQuery, useWeather } from "@/hooks/use-weather";
 import { cn } from "@/lib/utils";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
+import CurrentWeather from "@/components/current-weather";
+import HourlyTemprature from "@/components/hourly-temp";
 
 
 const WeatherDashBoard = () => {
@@ -75,7 +77,7 @@ const WeatherDashBoard = () => {
     );
   }
 
-  const locationName = locationQuery.data?.[0]?.name ?? "Unknown location";
+  const locationName = locationQuery.data?.[0];
   const country = locationQuery.data?.[0]?.country ?? "";
 
   if(weatherQuery.error || forecasetQuery.error) {
@@ -107,6 +109,22 @@ const WeatherDashBoard = () => {
         <Button variant={'outline'} size={'icon'} onClick={handleRefresh} disabled={isRefreshing}>
           <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
         </Button>
+      </div>
+
+
+      <div>
+        <div className="grid gap-6">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <CurrentWeather data={weatherQuery.data} locationName={locationName}/>
+            <HourlyTemprature data={forecasetQuery.data}/>
+          </div>
+        </div>
+        <div> 
+          <div>
+            {/* details */}
+            {/* forecast */}
+          </div>
+        </div>
       </div>
     </div>
   );
