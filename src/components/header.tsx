@@ -20,7 +20,7 @@ const Header = () => {
                     {/* Future feature: Theme toggle button */}
                     <div onClick={() => setTheme(isDark ? 'light' : 'dark')}
                         className={`flex items-center justify-center cursor-pointer transition-transform duration-500
-                            ${isDark ? 'hover:rotate-180' : 'hover:-rotate-180'}`}
+                            ${isDark ? 'rotate-180' : 'rotate-0'}`}
                         >
                         {isDark ? (
                             <Sun className="w-6 h-6 text-yellow-500 cursor-pointer" /> 
