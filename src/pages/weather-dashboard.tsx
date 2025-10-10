@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
 import CurrentWeather from "@/components/current-weather";
 import HourlyTemprature from "@/components/hourly-temp";
+import WeatherDetails from "@/components/weather-details";
+import WeatherForecast from "@/components/weather-forecase";
 
 
 const WeatherDashBoard = () => {
@@ -112,7 +114,7 @@ const WeatherDashBoard = () => {
       </div>
 
 
-      <div>
+      <div className="space-y-6">
         <div className="grid gap-6">
           <div className="flex flex-col lg:flex-row gap-4">
             <CurrentWeather data={weatherQuery.data} locationName={locationName}/>
@@ -120,9 +122,11 @@ const WeatherDashBoard = () => {
           </div>
         </div>
         <div> 
-          <div>
+          <div className="grid gap-6 md:grid-cols-2 itmes-start">
             {/* details */}
+            <WeatherDetails data={weatherQuery.data }/>
             {/* forecast */}
+            <WeatherForecast data={forecasetQuery.data }/>
           </div>
         </div>
       </div>
