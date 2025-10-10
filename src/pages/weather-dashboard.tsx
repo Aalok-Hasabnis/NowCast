@@ -11,7 +11,6 @@ import HourlyTemprature from "@/components/hourly-temp";
 import WeatherDetails from "@/components/weather-details";
 import WeatherForecast from "@/components/weather-forecase";
 
-
 const WeatherDashBoard = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -49,16 +48,15 @@ const WeatherDashBoard = () => {
 
   if(locationError) {
     return (
-      <Alert variant={'destructive'}>
+      <Alert variant="destructive">
         <AlertTriangle className="h-4 w-4"/>
-        <AlertTitle> Location Error </AlertTitle>
+        <AlertTitle>Location Error</AlertTitle>
         <AlertDescription className="flex flex-col gap-4">
-          <p> {locationError} </p>
-          <Button onClick={getLocation} variant={"outline"} className="w-fit">
+          <p>{locationError}</p>
+          <Button onClick={getLocation} variant="outline" className="w-fit">
             <MapPin className="mr-2 h-4 w-4"/>
             Enable Location
           </Button>
-          Your session has been expired. Please refresh and allow location access.
         </AlertDescription>
       </Alert>      
     );
@@ -66,11 +64,12 @@ const WeatherDashBoard = () => {
 
   if(!coordinates) {
     return (
-      <Alert variant={'destructive'}>
-        <AlertTitle> Location Required</AlertTitle>
+      <Alert>
+        <MapPin className="h-4 w-4"/>
+        <AlertTitle>Location Required</AlertTitle>
         <AlertDescription className="flex flex-col gap-4">
-          <p> Please enable location access to see your location weather. </p>
-          <Button onClick={getLocation} variant={"outline"} className="w-fit">
+          <p>Please enable location access to see your local weather.</p>
+          <Button onClick={getLocation} variant="outline" className="w-fit">
             <MapPin className="mr-2 h-4 w-4"/>
             Enable Location
           </Button>
@@ -80,16 +79,15 @@ const WeatherDashBoard = () => {
   }
 
   const locationName = locationQuery.data?.[0];
-  const country = locationQuery.data?.[0]?.country ?? "";
 
   if(weatherQuery.error || forecasetQuery.error) {
     return (
-      <Alert variant={'destructive'}>
+      <Alert variant="destructive">
         <AlertTriangle className="h-4 w-4"/>
         <AlertTitle>Error</AlertTitle>
         <AlertDescription className="flex flex-col gap-4">
-          <p> Failed to fetch weather data please try again. </p>
-          <Button onClick={handleRefresh} variant={"outline"} className="w-fit" disabled={isRefreshing}>
+          <p>Failed to fetch weather data. Please try again.</p>
+          <Button onClick={handleRefresh} variant="outline" className="w-fit" disabled={isRefreshing}>
             <RefreshCw className={cn("mr-2 h-4 w-4", isRefreshing && "animate-spin")}/>
             Retry
           </Button>
@@ -104,30 +102,33 @@ const WeatherDashBoard = () => {
 
   return (
     <div className="space-y-4">
-      {/*Favorite cities list */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tightly"> My Location </h1>
+        <h1 className="text-xl font-bold tracking-tight">My Location</h1>
           
-        <Button variant={'outline'} size={'icon'} onClick={handleRefresh} disabled={isRefreshing}>
+        <Button 
+          variant="outline" 
+          size="icon" 
+          onClick={handleRefresh} 
+          disabled={isRefreshing}
+        >
           <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
         </Button>
       </div>
 
-
       <div className="space-y-6">
+        {/* Current Weather & Hourly Temperature */}
         <div className="grid gap-6">
           <div className="flex flex-col lg:flex-row gap-4">
             <CurrentWeather data={weatherQuery.data} locationName={locationName}/>
             <HourlyTemprature data={forecasetQuery.data}/>
           </div>
         </div>
-        <div> 
-          <div className="grid gap-6 md:grid-cols-2 itmes-start">
-            {/* details */}
-            <WeatherDetails data={weatherQuery.data }/>
-            {/* forecast */}
-            <WeatherForecast data={forecasetQuery.data }/>
-          </div>
+
+        {/* Weather Details & Forecast */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <WeatherDetails data={weatherQuery.data}/>
+          <WeatherForecast data={forecasetQuery.data}/>
         </div>
       </div>
     </div>

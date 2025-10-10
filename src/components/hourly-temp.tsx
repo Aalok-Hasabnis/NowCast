@@ -18,56 +18,96 @@ const HourlyTemprature = ({data}: HourlyTempratureProps) => {
 
   return (
     <Card className="flex-1">
-    <CardHeader>
-        <CardTitle>Today's Temprature</CardTitle>
-    </CardHeader>
-    <CardContent>
-        <div className="h-[200px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}> 
-                    <XAxis 
-                        dataKey="time" 
-                        stroke="#8884d8" 
-                        fontSize={12} 
-                        tickLine={false} 
-                        axisLine={false}
-                        dy={10}
-                    />
-                    <YAxis 
-                        stroke="#8884d8" 
-                        fontSize={12} 
-                        tickLine={false} 
-                        axisLine={false} 
-                        tickFormatter={(value) => `${value}°`}
-                        dx={-10}
-                    />
+      <CardHeader>
+        <CardTitle>Today's Temperature</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[200px] sm:h-[240px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart 
+              data={chartData} 
+              margin={{ 
+                top: 5, 
+                right: 10, 
+                left: -10, 
+                bottom: 5 
+              }}
+            > 
+              <XAxis 
+                dataKey="time" 
+                stroke="#888888" 
+                fontSize={12} 
+                tickLine={false} 
+                axisLine={false}
+                dy={10}
+              />
+              <YAxis 
+                stroke="#888888" 
+                fontSize={12} 
+                tickLine={false} 
+                axisLine={false} 
+                tickFormatter={(value) => `${value}°`}
+                dx={-5}
+              />
 
-                    <Tooltip content={({active, payload}) => {
-                        if(active && payload && payload.length) {
-                            return (
-                            <div className="rounded-lg border bg-background p-2 shadow-sm">
-                                <div className="grid grid-cols-2 gap-2">
-                                    <div className="flex flex-col"> 
-                                        <span className="text-[0.70rem] uppercase text-muted-foreground">Temperature</span>
-                                        <span className="font-bold">{payload[0].value}°</span>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[0.70rem] uppercase text-muted-foreground">Feels like</span>
-                                        <span className="font-bold">{payload[1].value}°</span>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    }
-                    return null;
-                    }}/>
+              <Tooltip 
+                content={({active, payload}) => {
+                  if(active && payload && payload.length) {
+                    return (
+                      <div className="rounded-lg border bg-background p-2 shadow-md">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="flex flex-col"> 
+                            <span className="text-[0.70rem] uppercase text-muted-foreground font-medium">
+                              Temperature
+                            </span>
+                            <span className="font-bold text-lg">{payload[0].value}°</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[0.70rem] uppercase text-muted-foreground font-medium">
+                              Feels like
+                            </span>
+                            <span className="font-bold text-lg">{payload[1].value}°</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
 
-                    <Line type="monotone" dataKey="temp" stroke="#4f46e5" strokeWidth={2} dot={false}/>
-                    <Line type="monotone" dataKey="feels_like" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5"/>
-                </LineChart>
-            </ResponsiveContainer>
+              <Line 
+                type="monotone" 
+                dataKey="temp" 
+                stroke="#4f46e5" 
+                strokeWidth={2} 
+                dot={false}
+                activeDot={{ r: 4, strokeWidth: 2 }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="feels_like" 
+                stroke="#64748b" 
+                strokeWidth={2} 
+                dot={false} 
+                strokeDasharray="5 5"
+                activeDot={{ r: 4, strokeWidth: 2 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
-    </CardContent>
+        
+        <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#4f46e5]" />
+            <span className="text-muted-foreground">Temperature</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#64748b] opacity-70" />
+            <span className="text-muted-foreground">Feels like</span>
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 }

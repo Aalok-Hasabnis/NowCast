@@ -61,32 +61,32 @@ const WeatherForecast = ({data}:WeatherForecastProps) => {
             return (
               <div 
                 key={day.date}
-                className="grid grid-cols-3 items-center gap-4 rounded-lg border p-4 hover:bg-accent/50 transition-colors"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-3 sm:gap-4 rounded-lg border p-3 sm:p-4 hover:bg-accent/50 transition-colors"
               >
                 <div>
                   <p className="font-medium">{format(new Date(day.date * 1000), "EEE, MMM d")}</p>
                   <p className="text-sm text-muted-foreground capitalize">{day.weather.description}</p>
                 </div>
 
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-start sm:justify-center gap-4 order-last sm:order-none">
                   <span className="flex items-center text-blue-500">
-                    <ArrowDown className="mr-1 h-4 w-4"/>
-                    {formatTemp(day.temp_min)}
+                    <ArrowDown className="mr-1 h-4 w-4 flex-shrink-0"/>
+                    <span className="whitespace-nowrap">{formatTemp(day.temp_min)}</span>
                   </span>
                   <span className="flex items-center text-red-500">
-                    <ArrowUp className="mr-1 h-4 w-4"/>
-                    {formatTemp(day.temp_max)}
+                    <ArrowUp className="mr-1 h-4 w-4 flex-shrink-0"/>
+                    <span className="whitespace-nowrap">{formatTemp(day.temp_max)}</span>
                   </span>
                 </div>
                 
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-start lg:justify-end gap-3 sm:gap-4">
                   <span className="flex items-center gap-1">
-                    <Droplet className="h-4 w-4 text-blue-500"/>
-                    <span className="text-sm">{day.humidity}%</span>
+                    <Droplet className="h-4 w-4 text-blue-500 flex-shrink-0"/>
+                    <span className="text-sm whitespace-nowrap">{day.humidity}%</span>
                   </span>
                   <span className="flex items-center gap-1">
-                    <Wind className="h-4 w-4 text-gray-500"/>
-                    <span className="text-sm">{day.wind} m/s</span>
+                    <Wind className="h-4 w-4 text-gray-500 flex-shrink-0"/>
+                    <span className="text-sm whitespace-nowrap">{day.wind} m/s</span>
                   </span>
                 </div>
               </div>

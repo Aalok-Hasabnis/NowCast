@@ -20,14 +20,14 @@ const CurrentWeather = ({data, locationName} : CurrentWeatherProps) => {
     
     return (
         <Card className="overflow-hidden">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
                 <div className="grid gap-6 md:grid-cols-2">
                     {/* Left side - Weather info */}
                     <div className="flex flex-col justify-between space-y-4">
                         {/* Location */}
                         <div className="space-y-2">
                             <div className="flex items-end gap-1">
-                                <h2 className="text-2xl font-bold tracking-tight">
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
                                     {locationName?.name}
                                     {locationName?.state && `, ${locationName.state}`}
                                 </h2>
@@ -38,21 +38,21 @@ const CurrentWeather = ({data, locationName} : CurrentWeatherProps) => {
                         </div>
 
                         {/* Temperature */}
-                        <div className="flex items-center gap-4">
-                            <p className="text-7xl font-bold tracking-tighter">
+                        <div className="flex items-baseline gap-2 sm:gap-4">
+                            <p className="text-6xl sm:text-7xl font-bold tracking-tighter">
                                 {formatTemp(temp)}
                             </p>
                             <div className="space-y-1">
-                                <p className="text-sm font-medium text-muted-foreground">
+                                <p className="text-xs sm:text-sm font-medium text-muted-foreground whitespace-nowrap">
                                     Feels like {formatTemp(feels_like)}
                                 </p>
                                 <div className="flex gap-2 text-sm font-medium">
-                                    <span className="flex items-center gap-1 text-blue-500">
-                                        <ArrowDown className="h-3 w-3"/>
+                                    <span className="flex items-center gap-1 text-blue-500 whitespace-nowrap">
+                                        <ArrowDown className="h-3 w-3 flex-shrink-0"/>
                                         {formatTemp(temp_min)}
                                     </span>
-                                    <span className="flex items-center gap-1 text-red-500">
-                                        <ArrowUp className="h-3 w-3"/>
+                                    <span className="flex items-center gap-1 text-red-500 whitespace-nowrap">
+                                        <ArrowUp className="h-3 w-3 flex-shrink-0"/>
                                         {formatTemp(temp_max)}
                                     </span>
                                 </div>
@@ -60,19 +60,19 @@ const CurrentWeather = ({data, locationName} : CurrentWeatherProps) => {
                         </div>
 
                         {/* Weather details */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-2">
-                                <Droplets className="h-4 w-4 text-blue-500" />
-                                <div className="space-y-0.5">
+                        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                            <div className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 transition-colors">
+                                <Droplets className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                                <div className="space-y-0.5 min-w-0">
                                     <p className="text-xs text-muted-foreground">Humidity</p>
                                     <p className="text-sm font-medium">{humidity}%</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <Wind className="h-4 w-4 text-blue-500" />
-                                <div className="space-y-0.5">
+                            <div className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 transition-colors">
+                                <Wind className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                                <div className="space-y-0.5 min-w-0">
                                     <p className="text-xs text-muted-foreground">Wind Speed</p>
-                                    <p className="text-sm font-medium">{speed} m/s</p>
+                                    <p className="text-sm font-medium truncate">{speed} m/s</p>
                                 </div>
                             </div>
                         </div>
@@ -84,9 +84,9 @@ const CurrentWeather = ({data, locationName} : CurrentWeatherProps) => {
                             <img 
                                 src={`https://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
                                 alt={currentWeather.description}
-                                className="h-[200px] w-[200px] object-contain"
+                                className="h-[160px] w-[160px] sm:h-[200px] sm:w-[200px] object-contain"
                             />
-                            <p className="text-lg font-medium capitalize text-center mt-2">
+                            <p className="text-base sm:text-lg font-medium capitalize text-center mt-2">
                                 {currentWeather.description}
                             </p>
                         </div>
