@@ -1,12 +1,44 @@
 import { Skeleton } from "./ui/skeleton";
 import { Card, CardContent, CardHeader } from "./ui/card";
+import { ScrollArea } from "./ui/scroll-area";
 
-function WeatherSkelton() {
+interface WeatherSkeltonProps {
+    favoritesCount?: number;
+}
+
+function WeatherSkelton({ favoritesCount = 0 }: WeatherSkeltonProps) {
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
+            {/* Favorites Skeleton - only show if there are favorites */}
+            {favoritesCount > 0 && (
+                <div className="space-y-4">
+                    <Skeleton className="h-6 w-24"/>
+                    <ScrollArea className="w-full pb-4">
+                        <div className="flex gap-4">
+                            {[...Array(favoritesCount)].map((_, i) => (
+                                <div 
+                                    key={i}
+                                    className="relative flex min-w-[250px] items-center gap-3 rounded-lg border bg-card p-4 shadow-sm"
+                                >
+                                    <Skeleton className="h-6 w-6 rounded absolute right-1 top-1"/>
+                                    <div className="flex items-center gap-3 w-full pr-6">
+                                        <Skeleton className="w-16 h-16 rounded"/>
+                                        <div className="flex flex-col gap-2 flex-1">
+                                            <Skeleton className="h-5 w-24"/>
+                                            <Skeleton className="h-8 w-16"/>
+                                            <Skeleton className="h-3 w-32"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </ScrollArea>
+                </div>
+            )}
+
             {/* Header Skeleton */}
             <div className="flex items-center justify-between">
-                <Skeleton className="h-7 w-32"/>
+                <Skeleton className="h-6 w-32"/>
                 <Skeleton className="h-10 w-10 rounded-md"/>
             </div>
 

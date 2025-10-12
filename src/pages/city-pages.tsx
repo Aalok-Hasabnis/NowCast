@@ -1,4 +1,5 @@
 import CurrentWeather from "@/components/current-weather";
+import FavoriteButton from "@/components/favorite-button";
 import HourlyTemprature from "@/components/hourly-temp";
 import WeatherSkelton from "@/components/loading-skleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -21,7 +22,7 @@ const CityPage = () => {
 
   if(weatherQuery.error || forecasetQuery.error) {
     return (
-      <Alert variant="destructive">
+      <Alert variant="destructive" className="animate-in fade-in-50 slide-in-from-top-2 duration-500">
         <AlertTriangle className="h-4 w-4"/>
         <AlertTitle>Error</AlertTitle>
         <AlertDescription className="flex flex-col gap-4">
@@ -36,28 +37,38 @@ const CityPage = () => {
   }
 
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">{params.cityName}, {weatherQuery.data.sys.country}</h1>
-          <div>
-            {/* Favoriate button */}
-          </div>
+    <div className="space-y-6 animate-in fade-in-50 duration-700">
+      <div className="flex items-center justify-between bg-gradient-to-r from-background to-muted/20 p-6 rounded-2xl border shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
+        <div className="space-y-1">
+          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            {params.cityName}
+          </h1>
+          <p className="text-sm text-muted-foreground font-medium">{weatherQuery.data.sys.country}</p>
+        </div>
+        <div className="transform transition-transform duration-200 hover:scale-110 active:scale-95">
+          <FavoriteButton data={{...weatherQuery.data, name:params.cityName}} />
+        </div>
       </div>
 
       <div className="space-y-6">
-        {/* Current Weather & Hourly Temperature */}
         <div className="grid gap-6">
-          <div className="flex flex-col gap-4">
-            <CurrentWeather data={weatherQuery.data}/>
-            <HourlyTemprature data={forecasetQuery.data}/>
+          <div className="flex flex-col gap-6">
+            <div className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+              <CurrentWeather data={weatherQuery.data}/>
+            </div>
+            <div className="transform transition-all duration-300 hover:shadow-md rounded-xl">
+              <HourlyTemprature data={forecasetQuery.data}/>
+            </div>
           </div>
         </div>
 
-        {/* Weather Details & Forecast */}
         <div className="grid gap-6 md:grid-cols-2">
-          <WeatherDetails data={weatherQuery.data}/>
-          <WeatherForecast data={forecasetQuery.data}/>
+          <div className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1">
+            <WeatherDetails data={weatherQuery.data}/>
+          </div>
+          <div className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1">
+            <WeatherForecast data={forecasetQuery.data}/>
+          </div>
         </div>
       </div>
     </div>

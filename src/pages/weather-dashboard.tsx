@@ -10,11 +10,14 @@ import CurrentWeather from "@/components/current-weather";
 import HourlyTemprature from "@/components/hourly-temp";
 import WeatherDetails from "@/components/weather-details";
 import WeatherForecast from "@/components/weather-forecase";
+import FavoriteCities from "@/components/favorite-cities";
+import { useFavorite } from "@/hooks/use-favorite";
 
 const WeatherDashBoard = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const {coordinates, error:locationError, getLocation, isLoading:locationLoading} = useGeolocation();
+  const { favorites } = useFavorite();
 
   const locationQuery = useReverseGeocodeQuery(coordinates);
   const forecasetQuery = useForecastQuery(coordinates);
@@ -43,7 +46,7 @@ const WeatherDashBoard = () => {
   };
 
   if(locationLoading) {
-    return <WeatherSkelton />
+    return <WeatherSkelton favoritesCount={favorites.length} />
   }
 
   if(locationError) {
@@ -97,12 +100,15 @@ const WeatherDashBoard = () => {
   }
 
   if(!weatherQuery.data || !forecasetQuery.data) {
-    return <WeatherSkelton />
+    return <WeatherSkelton favoritesCount={favorites.length} />
   }
 
   return (
     <div className="space-y-4">
-      {/* Header */}
+      {/* Favorite Cities */}
+      <FavoriteCities />
+
+
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">My Location</h1>
           
@@ -132,7 +138,7 @@ const WeatherDashBoard = () => {
         </div>
       </div>
     </div>
-  );
+  ); 
 }
 
 export default WeatherDashBoard;
